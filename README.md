@@ -1,4 +1,4 @@
-# 🎉 **Welcome to diagram-studio-mono** 🎉
+# 🎉 **Welcome to Syntaxia open stack** 🎉
 
 🔧 Underlying Tech Stack of Syntaxia | A comprehensive mono repo demonstrating the foundation of Syntaxia's architecture, featuring tools and frameworks like React, TypeScript, NestJS, Drizzle ORM, Redux, and TailwindCSS. Includes two demo apps, sharing a unified backend. 🚀 Showcasing modern full-stack development practices with CI/CD, testing, and mono repo management.
 
