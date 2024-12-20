@@ -1,0 +1,91 @@
+# Node.js
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnp/
+.pnp.js
+.yarn/install-state.gz
+
+# Build outputs
+dist/
+build/
+out/
+.cache/
+.turbo/
+.next/
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Next.js
+.next/
+out/
+.vercel/
+
+# Tests
+coverage/
+.nyc_output/
+.jest/
+
+# Drizzle ORM
+migrations/
+
+# Temporary files and directories
+.temp/
+.tmp/
+*.swp
+*.swp.*
+
+# IDE and Editor files
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Debugging
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Miscellaneous
+*.pem
+
+# Lock files in all subdirectories
+**/package-lock.json
+**/yarn.lock
