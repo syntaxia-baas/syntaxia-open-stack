@@ -10,7 +10,7 @@
 - 📊 **Analytics Dashboard**: Visualize app usage with interactive charts.
 - 🔒 **Authentication**: Secure login system with NextAuth.
 - 🖼️ **Architecture Diagram Builders**:
-  - React Flow-based diagram builder for flow-based diagrams.
+   - React Flow-based diagram builder for flow-based diagrams.
 - 🌈 **Custom Themes**: Personalize your app experience (Coming Soon!).
 - 🧑‍🤝‍🧑 **Collaboration Tools**: Real-time updates and shared workspaces (Coming Soon!).
 
@@ -19,6 +19,7 @@
 ## 🛠️ **Tech Stack**
 
 ### 🎨 **Frontend**
+
 - ⚛️ **React**: Modern UI development.
 - 🌀 **Next.js**: Powerful React framework for SSR and routing.
 - 🌟 **TailwindCSS**: Utility-first CSS for fast and responsive design.
@@ -26,32 +27,39 @@
 - 🖍️ **React Flow**: Interactive flow-based diagram creation.
 
 ### 🔧 **Backend**
+
 - 🖥️ **Node.js**: Server-side runtime.
 - 🍹 **NestJS**: Modular and scalable backend framework.
 - 💾 **Drizzle ORM**: Type-safe and modern ORM for database interactions.
 - 📜 **TypeScript**: Strongly typed language for consistent code.
 
 ### 📂 **Monorepo Management**
+
 - 🛠️ **Turborepo**: High-performance monorepo setup.
 
 ### 🔐 **Authentication**
+
 - 🔑 **NextAuth.js**: Secure and extensible authentication.
 
 ### 🛢️ **Database**
+
 - 🐘 **PostgreSQL**: Reliable and scalable relational database.
 - 🗃️ **Drizzle ORM**: Simplified and type-safe database layer.
 
 ### 🧪 **Testing**
+
 - 🧪 **Jest**: Robust testing framework.
 - 🧩 **React Testing Library**: Unit testing for React components.
 - 🕵️‍♂️ **Supertest**: API testing made easy.
 
 ### 📈 **DevOps & CI/CD**
+
 - 🤖 **GitHub Actions**: Automated testing and deployment.
 - 🚀 **Vercel**: Seamless frontend deployment.
 - 📡 **Render.com**: Backend hosting for scalability.
 
 ### 🛠️ **Developer Experience**
+
 - 💅 **ESLint**: Linting for clean and consistent code.
 - ✨ **Prettier**: Automatic code formatting.
 - 🐾 **Husky**: Git hooks for streamlined workflows.
@@ -105,4 +113,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 ### **🚀 Happy Coding!**
-
