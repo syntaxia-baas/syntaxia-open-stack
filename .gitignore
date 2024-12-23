@@ -1,43 +1,91 @@
 # Node.js
 node_modules/
 npm-debug.log*
-package-lock.json
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnp/
+.pnp.js
+.yarn/install-state.gz
 
 # Build outputs
 dist/
 build/
 out/
 .cache/
-.mturbo/
-
-# Monorepo tools (Turborepo, etc.)
 .turbo/
-turbo/
+.next/
+
+# Logs
+logs/
+*.log
 
 # Environment files
 .env
+.env.development.local
+.env.test.local
+.env.production.local
 .env.local
-.env.*.local
 
-# IDE/Editor files
-.vscode/
-.idea/
-.DS_Store
-*.iml
-
-# Logs
-*.log
-*.log.*
-
-# Testing
-coverage/
-.jest/
-
-# Next.js (Frontend)
+# Next.js
 .next/
+out/
+.vercel/
+
+# Tests
+coverage/
+.nyc_output/
+.jest/
 
 # Drizzle ORM
 migrations/
 
-# Ignore lock files in all subdirectories
+# Temporary files and directories
+.temp/
+.tmp/
+*.swp
+*.swp.*
+
+# IDE and Editor files
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Debugging
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Miscellaneous
+*.pem
+
+# Lock files in all subdirectories
 **/package-lock.json
+**/yarn.lock

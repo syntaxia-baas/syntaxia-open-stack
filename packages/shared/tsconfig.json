@@ -1,0 +1,21 @@
+{
+   "extends": "@repo/typescript-config/base.json",
+   "compilerOptions": {
+      "composite": true,
+      "declaration": true,
+      "incremental": true,
+      "emitDeclarationOnly": true,
+      "declarationMap": true,
+      "moduleResolution": "node",
+      "outDir": "dist",
+      "rootDir": "src",
+      "module": "ESNext",
+      "target": "ES2020",
+      "baseUrl": ".",
+      "paths": {
+         "@repo/shared/*": ["./src/*"]
+       }
+   },
+   "include": ["src/**/*"],
+   "exclude": ["node_modules", "dist"]
+}
