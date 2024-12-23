@@ -10,14 +10,15 @@
    },
    "dependencies": {
       "@repo/ui": "*",
+      "@xyflow/react": "^12.3.6",
       "next": "15.1.2",
       "react": "^19.0.0",
       "react-dom": "^19.0.0"
    },
    "devDependencies": {
       "@repo/eslint-config": "*",
-      "@repo/typescript-config": "*",
       "@repo/jest-config": "*",
+      "@repo/typescript-config": "*",
       "@types/node": "^20",
       "@types/react": "^19",
       "@types/react-dom": "^19",
