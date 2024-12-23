@@ -1,5 +1,5 @@
 {
-   "name": "@repo/common",
+   "name": "@repo/shared",
    "version": "1.0.0",
    "private": true,
    "main": "src/index.ts",
@@ -12,7 +12,9 @@
    },
    "devDependencies": {
       "@repo/eslint-config": "*",
+      "@repo/jest-presets": "*",
       "@repo/typescript-config": "*",
-      "@repo/jest-config": "*"
+      "@types/jest": "^29.5.12",
+      "jest": "^29.7.0"
    }
 }
