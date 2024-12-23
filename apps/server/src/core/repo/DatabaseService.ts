@@ -10,12 +10,11 @@ import {
 } from 'drizzle-orm'
 import { PgTable, PgInsertValue, PgUpdateSetSource } from 'drizzle-orm/pg-core'
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-
+import { Branded } from '@shared/types/common'
 import { Inject } from '@nestjs/common'
-import { DrizzleService } from 'core/drizzle/drizzle-service'
-import { Errors } from 'core/errors/errors'
-import { CommonDBFields, CommonArgs } from 'types/common-fields'
-import { Branded } from '@repo/common/src/common/types'
+import { CommonDBFields, CommonArgs } from '@server/types/common-fields'
+import { DrizzleService } from '../drizzle/drizzle-service'
+import { Errors } from '../errors/errors'
 
 // Define types for reuscore/errors/errorsations
 export type CreateFunc<T extends PgTable = PgTable> = (

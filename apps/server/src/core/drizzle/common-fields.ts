@@ -1,3 +1,4 @@
+import { Branded, UserName } from '@shared/types/common'
 import {
    boolean,
    PgColumn,
@@ -5,7 +6,6 @@ import {
    timestamp,
    varchar,
 } from 'drizzle-orm/pg-core'
-import { Branded, UserName } from '../../../../packages/common/src/common/types'
 
 const brandedIDColumn = <ID extends Branded<unknown>>() =>
    varchar('id', { length: 26 }).$type<ID>().primaryKey().notNull()

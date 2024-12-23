@@ -2,11 +2,10 @@
    "extends": "@repo/typescript-config/nestjs.json",
    "compilerOptions": {
       "outDir": "./dist",
-      "baseUrl": "./src",
+      "baseUrl": ".",
       "paths": {
-         "@drizzle/*": ["./drizzle/*"],
-         "@user/*": ["./user/*"],
-         "@common/*": ["../../packages/shared/src/*"]
+         "@server/*": ["src/*"],
+         "@shared/*": ["../../packages/shared/src/*"]
       }
    },
    "include": ["src/**/*", "jest.config.ts", "drizzle.config.ts"],

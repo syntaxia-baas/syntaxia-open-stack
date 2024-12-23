@@ -1,4 +1,4 @@
-import { UserName } from '@repo/common/src/common/types'
+import { UserName } from '@shared/types/common'
 import { PgColumn, PgTable } from 'drizzle-orm/pg-core'
 
 export type CommonDBFields = PgTable & {

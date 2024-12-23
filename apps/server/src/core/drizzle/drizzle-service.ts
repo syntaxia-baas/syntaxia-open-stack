@@ -9,9 +9,9 @@ import {
    OnModuleDestroy,
    OnApplicationShutdown,
 } from '@nestjs/common'
-import { fromPromiseToEffect } from 'core/effect/effect-util'
-import { FuncAction } from 'core/repo/DatabaseService'
-import { SyntaxiaError } from 'core/errors/errors'
+import { fromPromiseToEffect } from '../effect/effect-util'
+import { SyntaxiaError } from '../errors/errors'
+import { FuncAction } from '../repo/DatabaseService'
 //import dotenv from 'dotenv'
 //dotenv.config()
 @Injectable()
