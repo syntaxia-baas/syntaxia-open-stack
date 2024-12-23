@@ -1,6 +1,7 @@
 # Node.js
 node_modules/
 npm-debug.log*
+<<<<<<< HEAD
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -8,12 +9,16 @@ lerna-debug.log*
 .pnp/
 .pnp.js
 .yarn/install-state.gz
+=======
+package-lock.json
+>>>>>>> df6ac21 (1) Added comprehensive list of errors)
 
 # Build outputs
 dist/
 build/
 out/
 .cache/
+<<<<<<< HEAD
 .turbo/
 .next/
 
@@ -89,3 +94,38 @@ next-env.d.ts
 # Lock files in all subdirectories
 **/package-lock.json
 **/yarn.lock
+=======
+.mturbo/
+
+# Monorepo tools (Turborepo, etc.)
+.turbo/
+turbo/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE/Editor files
+.vscode/
+.idea/
+.DS_Store
+*.iml
+
+# Logs
+*.log
+*.log.*
+
+# Testing
+coverage/
+.jest/
+
+# Next.js (Frontend)
+.next/
+
+# Drizzle ORM
+migrations/
+
+# Ignore lock files in all subdirectories
+**/package-lock.json
+>>>>>>> df6ac21 (1) Added comprehensive list of errors)
