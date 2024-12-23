@@ -6,9 +6,9 @@
       "paths": {
          "@drizzle/*": ["./drizzle/*"],
          "@user/*": ["./user/*"],
-         "@common/*": ["../../packages/common/src/*"]
+         "@common/*": ["../../packages/shared/src/*"]
       }
    },
    "include": ["src/**/*", "jest.config.ts", "drizzle.config.ts"],
-   "references": [{ "path": "../../packages/common" }]
+   "references": [{ "path": "../../packages/shared" }]
 }
