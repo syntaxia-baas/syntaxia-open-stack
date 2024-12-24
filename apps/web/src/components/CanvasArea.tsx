@@ -16,9 +16,7 @@ import {
 } from '@xyflow/react'
 import { useCallback, useState } from 'react'
 import { nodeTypes } from './nodes/node-types'
-
 import { RightSideBar } from './RightSideBar'
-import { Layout, Palette, Type } from 'lucide-react'
 export const CanvasArea = () => {
    const [nodes, setNodes, onNodesChange] = useNodesState<Node>([])
    const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([])
@@ -28,8 +26,8 @@ export const CanvasArea = () => {
 
    // Handle new connections between nodes
    const onConnect: OnConnect = useCallback(
-      (params: Connection) => {
-         setEdges(eds => addEdge({ ...params, animated: true }, eds))
+      (connection: Connection) => {
+         setEdges(eds => addEdge({ ...connection, animated: true }, eds))
       },
       [setEdges],
    )
