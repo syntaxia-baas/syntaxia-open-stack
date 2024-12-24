@@ -37,7 +37,7 @@ export type PaginationQuery = {
 export type FuncAction = (txDb: PostgresJsDatabase) => Promise<any>
 
 // Base repository class providing common CRUD operations for database tables
-export abstract class DatabaseService<
+export abstract class Repository<
    T extends PgTable & CommonDBFields,
    ID extends Branded<unknown>,
 > {
@@ -113,6 +113,13 @@ export abstract class DatabaseService<
          .where(combinedQuery)
          .limit(1)
       return result as InferSelectModel<T> | undefined
+   }
+   // Find all records
+   async findAll(args: CommonArgs): Promise<InferSelectModel<T>[]> {
+      const combinedQuery = this.buildQuery(args, undefined)
+      return this.db.select().from(this.table).where(combinedQuery) as Promise<
+         InferSelectModel<T>[]
+      >
    }
 
    // find multiple records matching the condition
@@ -209,5 +216,10 @@ export abstract class DatabaseService<
    }
 
    // Abstract method to be implemented by derived classes for handling additional arguments
-   abstract applyArgs(args: CommonArgs): SQLWrapper | undefined
+   applyArgs(args: CommonArgs): SQLWrapper {
+      return and(
+         eq(this.table.disable, false),
+         eq(this.table.createdBy, args.userName),
+      )
+   }
 }

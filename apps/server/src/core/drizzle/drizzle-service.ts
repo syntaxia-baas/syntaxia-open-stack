@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common'
 import { fromPromiseToEffect } from '../effect/effect-util'
 import { SyntaxiaError } from '../errors/errors'
-import { FuncAction } from '../repo/DatabaseService'
+import { FuncAction } from '../repo/Repository'
 //import dotenv from 'dotenv'
 //dotenv.config()
 @Injectable()

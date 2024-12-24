@@ -12,8 +12,8 @@ if (!process.env.DATABASE_URL) {
 }
 
 export default defineConfig({
-   schema: './src/drizzle/schemas/*',
-   out: './src/drizzle/migrations',
+   schema: './src/core/drizzle/schemas/*',
+   out: './src/core/drizzle/migrations',
    dialect: 'postgresql',
    dbCredentials: {
       url: process.env.DATABASE_URL!,

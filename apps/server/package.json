@@ -19,7 +19,8 @@
       "test:cov": "jest --coverage",
       "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
       "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json",
-      "generate": "cross-env NODE_ENV=dev drizzle-kit generate --out src/drizzle/migrations --schema src/drizzle/schema/schema.ts --dialect postgresql"
+      "generate": "cross-env NODE_ENV=dev drizzle-kit generate --out src/core/drizzle/migrations --schema src/core/drizzle/schemas/schema.ts --dialect postgresql",
+      "db:push": "cross-env NODE_ENV=dev drizzle-kit push"
    },
    "dependencies": {
       "@nestjs/common": "^10.0.0",
