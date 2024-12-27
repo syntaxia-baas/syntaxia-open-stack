@@ -1,5 +1,5 @@
 import { useAuth } from '@/providers/AuthProvider'
-import { useDiagram } from '@/providers/DiagramProvider'
+import { useDiagram } from '@/providers/DiagramViewProvider'
 import { AppDispatch, RootState } from '@/redux/store'
 import {
    CreateDiagramPayload,

@@ -3,7 +3,7 @@ import { CanvasArea } from './CanvasArea'
 import { LeftSidebar } from './LeftSideBar'
 import { SecondaryToolBar } from './SecondaryToolBar'
 import { TopToolBar } from './TopToolBar'
-import { DiagramProvider } from '@/providers/DiagramProvider'
+import { DiagramProvider } from '@/providers/DiagramViewProvider'
 import { Diagram } from '@shared/types/diagram'
 
 interface Props {

@@ -32,7 +32,7 @@ import {
    NodeCustomData,
    NodeElement,
 } from '@shared/types/diagram'
-import { useDiagram } from '@/providers/DiagramProvider'
+import { useDiagram } from '@/providers/DiagramViewProvider'
 
 export const CanvasArea = () => {
    const dispatch = useDispatch<AppDispatch>()
