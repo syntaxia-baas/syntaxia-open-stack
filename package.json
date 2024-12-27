@@ -32,6 +32,8 @@
    "dependencies": {
       "cross-env": "^7.0.3",
       "eslint": "^8.57.1",
+      "ulid": "^2.3.0",
+      "uuid": "^11.0.3",
       "zod": "^3.24.1"
    }
 }

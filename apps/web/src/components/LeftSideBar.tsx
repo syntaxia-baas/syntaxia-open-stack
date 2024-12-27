@@ -1,15 +1,7 @@
-import {
-   ChevronRight,
-   Circle,
-   Layout,
-   Square,
-   Triangle,
-   Type,
-} from 'lucide-react'
+import { ChevronRight, Circle, Layout, Square, Triangle } from 'lucide-react'
 import { useState } from 'react'
 
 export const LeftSidebar = () => {
-   const [activeTab, setActiveTab] = useState('shapes')
    const [sidebarExpanded, setSidebarExpanded] = useState(true)
    const onDragStart = (
       event: React.DragEvent,
@@ -32,83 +24,77 @@ export const LeftSidebar = () => {
             >
                {sidebarExpanded && <span>Elements</span>}
                <ChevronRight
-                  className={`size-4 transition-transform ${sidebarExpanded ? 'rotate-180' : ''}`}
+                  className={`size-4  transition-transform ${sidebarExpanded ? 'rotate-180' : ''}`}
                />
             </button>
-
-            {/* Tabs */}
             {sidebarExpanded && (
-               <div className="border-b">
-                  <div className="flex">
-                     <button
-                        onClick={() => setActiveTab('shapes')}
-                        className={`flex-1 px-4 py-2 text-sm ${activeTab === 'shapes' ? 'border-b-2 border-blue-500' : ''}`}
-                     >
-                        Shapes
-                     </button>
-                     <button
-                        onClick={() => setActiveTab('components')}
-                        className={`flex-1 px-4 py-2 text-sm ${activeTab === 'components' ? 'border-b-2 border-blue-500' : ''}`}
-                     >
-                        Components
-                     </button>
+               <div className="p-4">
+                  {/* Shapes Section */}
+                  <div className="mb-6">
+                     <h3 className="mb-3 text-xs font-semibold uppercase text-gray-500">
+                        Node Types
+                     </h3>
+                     <div className="space-y-2">
+                        <div
+                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
+                           draggable
+                           onDragStart={e =>
+                              onDragStart(e, 'startNode', 'Start')
+                           }
+                        >
+                           <Circle className="size-5 fill-green-200 stroke-green-500 " />
+                           <span>Start</span>
+                        </div>
+                        <div
+                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
+                           draggable
+                           onDragStart={e =>
+                              onDragStart(e, 'processNode', 'Process')
+                           }
+                        >
+                           <Square className="size-5 fill-blue-200  stroke-blue-500 " />
+                           <span>Process</span>
+                        </div>
+                        <div
+                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
+                           draggable
+                           onDragStart={e =>
+                              onDragStart(e, 'decisionNode', 'Decision')
+                           }
+                        >
+                           <Triangle className="size-5 fill-orange-200 stroke-orange-500" />
+                           <span>Desicion</span>
+                        </div>
+                        <div
+                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
+                           draggable
+                           onDragStart={e => onDragStart(e, 'endNode', 'End')}
+                        >
+                           <Circle className="size-5 fill-red-200 stroke-red-500" />
+                           <span>End</span>
+                        </div>
+                     </div>
                   </div>
-               </div>
-            )}
 
-            {/* Elements */}
-            {sidebarExpanded && (
-               <div className="space-y-2 p-4">
-                  {activeTab === 'shapes' ? (
-                     <>
+                  {/* Components Section */}
+                  <div>
+                     <h3 className="mb-3 text-xs font-semibold uppercase text-gray-500">
+                        Components
+                     </h3>
+                     <div className="space-y-2">
                         <div
                            className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
                            draggable
                            onDragStart={e =>
-                              onDragStart(e, 'rectangleNode', 'Squere')
+                              onDragStart(e, 'container', 'Container')
                            }
                         >
-                           <Square className="size-5" />
-                           <span>Rectangle</span>
-                        </div>
-                        <div
-                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
-                           draggable
-                           onDragStart={e =>
-                              onDragStart(e, 'circleNode', 'Circle')
-                           }
-                        >
-                           <Circle className="size-5" />
-                           <span>Circle</span>
-                        </div>
-                        <div
-                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
-                           draggable
-                           onDragStart={e =>
-                              onDragStart(e, 'diamondNode', 'Triangle')
-                           }
-                        >
-                           <Triangle className="size-5" />
-                           <span>Triangle</span>
-                        </div>
-
-                        <div
-                           className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100"
-                           draggable
-                           onDragStart={e => onDragStart(e, 'type', 'Type')}
-                        >
-                           <Type className="size-5" />
-                           <span>Text</span>
-                        </div>
-                     </>
-                  ) : (
-                     <>
-                        <div className="flex cursor-pointer items-center space-x-3 rounded p-2 hover:bg-gray-100">
                            <Layout className="size-5" />
                            <span>Container</span>
                         </div>
-                     </>
-                  )}
+                        {/* Add more components here as needed */}
+                     </div>
+                  </div>
                </div>
             )}
          </div>

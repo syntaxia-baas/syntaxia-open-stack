@@ -25,5 +25,8 @@
       "eslint-plugin-tailwindcss": "^3.17.5",
       "eslint-plugin-testing-library": "^7.1.1",
       "eslint-plugin-unused-imports": "^4.1.4"
+   },
+   "dependencies": {
+      "@next/eslint-plugin-next": "^15.1.2"
    }
 }

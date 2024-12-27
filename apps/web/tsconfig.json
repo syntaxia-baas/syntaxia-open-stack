@@ -2,10 +2,9 @@
    "extends": "@repo/typescript-config/nextjs.json",
    "compilerOptions": {
       "jsx": "preserve",
-      "baseUrl": ".",
       "sourceMap": true,
       "paths": {
-         "@/*": ["./app/*"],
+         "@/*": ["./src/*"],
          "@shared/*": ["../../packages/shared/src/*"]
       },
       "plugins": [
@@ -22,7 +21,7 @@
       ".next/types/**/*.ts",
       "postcss.config.mjs",
       "tailwind.config.ts",
-      "app/**/*"
+      "src/**/*"
    ],
    "exclude": ["node_modules"],
    "references": [{ "path": "../../packages/shared" }]

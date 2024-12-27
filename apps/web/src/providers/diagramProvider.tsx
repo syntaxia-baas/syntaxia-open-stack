@@ -1,20 +1,25 @@
-import { createContext, useContext } from 'react'
-import { Diagram } from 'src/redux/store/slices/diagram/state'
+'use client'
+import { Diagram } from '@shared/types/diagram'
+import { createContext, ReactNode, useContext } from 'react'
 
-export type DiagramContextType = {
-   diagram: Diagram | null
-   setDiagram: (diagram: Diagram) => void
+type DiagramContextType = {
+   currentDiagram: Diagram
 }
-export const DiagramContext = createContext<DiagramContextType>({
-   diagram: null,
-   setDiagram: () => {},
-})
+const DiagramContext = createContext<DiagramContextType | undefined>(undefined)
 export type DiagramProviderProps = {
-   children: React.ReactNode
+   currentDiagram: Diagram
+   children: ReactNode
 }
-export const DiagramProvider = ({ children }: DiagramProviderProps) => {
+export const DiagramProvider = ({
+   currentDiagram,
+   children,
+}: DiagramProviderProps) => {
    return (
-      <DiagramContext.Provider value={{ diagram: null, setDiagram: () => {} }}>
+      <DiagramContext.Provider
+         value={{
+            currentDiagram,
+         }}
+      >
          {children}
       </DiagramContext.Provider>
    )

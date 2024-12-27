@@ -8,33 +8,12 @@ import {
    Layers,
    Underline,
    Lock,
+   Redo,
+   Undo,
 } from 'lucide-react'
 export const SecondaryToolBar = () => {
    return (
-      // <Panel position="top-center" className="w-full border-b bg-white p-2">
-      //    <div className="flex items-center space-x-4">
-      //       <div className="flex items-center space-x-2">
-      //          <Palette className="size-4" />
-      //          <input type="color" className="size-6" />
-      //       </div>
-      //       <div className="flex items-center space-x-2">
-      //          <Type className="size-4" />
-      //          <select className="rounded border p-1">
-      //             <option>Arial</option>
-      //             <option>Helvetica</option>
-      //             <option>Times New Roman</option>
-      //          </select>
-      //       </div>
-      //       <div className="flex items-center space-x-2">
-      //          <Layout className="size-4" />
-      //          <select className="rounded border p-1">
-      //             <option>Horizontal</option>
-      //             <option>Vertical</option>
-      //          </select>
-      //       </div>
-      //    </div>
-      // </Panel>
-      <div className="border-b bg-white p-2">
+      <div className=" border-b bg-white p-2">
          <div className="flex items-center space-x-6">
             {/* Text Formatting */}
             <div className="flex items-center space-x-2">
@@ -92,6 +71,15 @@ export const SecondaryToolBar = () => {
                </button>
                <button className="rounded p-1 hover:bg-gray-100">
                   <Lock className="size-4" />
+               </button>
+            </div>
+            <div className="flex items-center space-x-4 px-2">
+               <div className="h-6 w-px bg-gray-300" />
+               <button className="rounded p-1 hover:bg-gray-100">
+                  <Undo className="size-4" />
+               </button>
+               <button className="rounded p-1 hover:bg-gray-100">
+                  <Redo className="size-4" />
                </button>
             </div>
          </div>

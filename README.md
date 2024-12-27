@@ -6,13 +6,9 @@
 
 ## 🌟 **Features**
 
-- ✅ **Task Management**: Effortlessly create, update, and manage tasks.
-- 📊 **Analytics Dashboard**: Visualize app usage with interactive charts.
-- 🔒 **Authentication**: Secure login system with NextAuth.
+- 🔒 **Authentication**: Secure login system with NextAuth(Coming soon!).
 - 🖼️ **Architecture Diagram Builders**:
    - React Flow-based diagram builder for flow-based diagrams.
-- 🌈 **Custom Themes**: Personalize your app experience (Coming Soon!).
-- 🧑‍🤝‍🧑 **Collaboration Tools**: Real-time updates and shared workspaces (Coming Soon!).
 
 ---
 
@@ -23,7 +19,6 @@
 - ⚛️ **React**: Modern UI development.
 - 🌀 **Next.js**: Powerful React framework for SSR and routing.
 - 🌟 **TailwindCSS**: Utility-first CSS for fast and responsive design.
-- 🔗 **React Query**: Data fetching and caching made simple.
 - 🖍️ **React Flow**: Interactive flow-based diagram creation.
 
 ### 🔧 **Backend**
@@ -39,7 +34,7 @@
 
 ### 🔐 **Authentication**
 
-- 🔑 **NextAuth.js**: Secure and extensible authentication.
+- 🔑 **NextAuth.js**: Secure and extensible authentication.(Pending)
 
 ### 🛢️ **Database**
 
@@ -48,13 +43,13 @@
 
 ### 🧪 **Testing**
 
-- 🧪 **Jest**: Robust testing framework.
+- 🧪 **Jest**: Robust testing framework.(Pending)
 - 🧩 **React Testing Library**: Unit testing for React components.
 - 🕵️‍♂️ **Supertest**: API testing made easy.
 
 ### 📈 **DevOps & CI/CD**
 
-- 🤖 **GitHub Actions**: Automated testing and deployment.
+- 🤖 **GitHub Actions**: Automated testing and deployment. (Pending)
 - 🚀 **Vercel**: Seamless frontend deployment.
 - 📡 **Render.com**: Backend hosting for scalability.
 
@@ -62,8 +57,8 @@
 
 - 💅 **ESLint**: Linting for clean and consistent code.
 - ✨ **Prettier**: Automatic code formatting.
-- 🐾 **Husky**: Git hooks for streamlined workflows.
-- 🚦 **Commitlint**: Enforce conventional commits.
+- 🐾 **Husky**: Git hooks for streamlined workflows.(Pending)
+- 🚦 **Commitlint**: Enforce conventional commits.(Pending)
 
 ---
 

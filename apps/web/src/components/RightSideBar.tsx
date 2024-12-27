@@ -1,8 +1,9 @@
+import { NodeCustomData } from '@shared/types/diagram'
 import { Node } from '@xyflow/react'
 
 interface RightSideBarProps {
    selectedNode: Node
-   setNodes: React.Dispatch<React.SetStateAction<Node[]>>
+   setNodes: React.Dispatch<React.SetStateAction<Node<NodeCustomData>[]>>
 }
 
 export const RightSideBar = ({ selectedNode, setNodes }: RightSideBarProps) => {

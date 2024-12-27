@@ -10,6 +10,6 @@ export type CommonDBFields = PgTable & {
    disable: PgColumn
 }
 
-export type CommonArgs = {
+export type UserArgs = {
    userName: UserName
 }

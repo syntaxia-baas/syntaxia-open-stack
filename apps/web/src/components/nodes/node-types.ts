@@ -1,10 +1,12 @@
 import { NodeTypes } from '@xyflow/react'
-import { CircleNode } from './CircleNode'
-import { DiamondNode } from './DiamondNode'
-import { RectangleNode } from './RectangleNode'
+import { EndNode } from './EndNode'
+import { DecisionNode } from './DecisionNode'
+import { ProcessNode } from './ProcessNode'
+import { StartNode } from './StartNode'
 
 export const nodeTypes: NodeTypes = {
-   circleNode: CircleNode,
-   diamondNode: DiamondNode,
-   rectangleNode: RectangleNode,
+   startNode: StartNode,
+   processNode: ProcessNode,
+   decisionNode: DecisionNode,
+   endNode: EndNode,
 }

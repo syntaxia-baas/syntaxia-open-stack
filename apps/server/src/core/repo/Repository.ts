@@ -12,7 +12,7 @@ import { PgTable, PgInsertValue, PgUpdateSetSource } from 'drizzle-orm/pg-core'
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { Branded } from '@shared/types/common'
 import { Inject } from '@nestjs/common'
-import { CommonDBFields, CommonArgs } from '@server/types/common-fields'
+import { CommonDBFields, UserArgs } from '@server/types/common-fields'
 import { DrizzleService } from '../drizzle/drizzle-service'
 import { Errors } from '../errors/errors'
 
@@ -54,23 +54,36 @@ export abstract class Repository<
    // Create a new record in the database
    async insertOne(
       data: PgInsertValue<T>,
-      _args: CommonArgs,
+      _args: UserArgs,
    ): Promise<InferInsertModel<T>> {
       const [result] = await this.db.insert(this.table).values(data).returning()
       return result as InferInsertModel<T>
    }
 
+   async insertOrUpdateOneById(
+      id: ID,
+      data: PgInsertValue<T>,
+      args: UserArgs,
+   ): Promise<InferSelectModel<T>> {
+      const findOne = await this.findById(id, args)
+      if (findOne) {
+         return this.update(id, data, args)
+      }
+      await this.insertOne(data, args)
+      return data as InferSelectModel<T>
+   }
+
    // Insert multiple records into the database
    async insertMany(
       data: PgInsertValue<T>[],
-      _args: CommonArgs,
+      _args: UserArgs,
    ): Promise<InferInsertModel<T>[]> {
       const results = await this.db.insert(this.table).values(data).returning()
       return results as InferInsertModel<T>[]
    }
 
    // Create a deferred action for inserting a record
-   insertQuery(data: PgInsertValue<T>, _args: CommonArgs): CreateFunc<T> {
+   insertQuery(data: PgInsertValue<T>, _args: UserArgs): CreateFunc<T> {
       return async (txDb: PostgresJsDatabase) => {
          const [result] = await txDb.insert(this.table).values(data).returning()
          return result as InferInsertModel<T>
@@ -78,7 +91,7 @@ export abstract class Repository<
    }
 
    // Find a record by its ID
-   async findById(id: ID, args: CommonArgs): Promise<InferSelectModel<T>> {
+   async findById(id: ID, args: UserArgs): Promise<InferSelectModel<T>> {
       const combinedQuery = this.buildQuery(args, eq(this.table.id, id))
       const [result] = await this.db
          .select()
@@ -91,10 +104,7 @@ export abstract class Repository<
    }
 
    // Find multiple records by their IDs
-   async findByIds(
-      ids: ID[],
-      args: CommonArgs,
-   ): Promise<InferSelectModel<T>[]> {
+   async findByIds(ids: ID[], args: UserArgs): Promise<InferSelectModel<T>[]> {
       const combinedQuery = this.buildQuery(args, inArray(this.table.id, ids))
       return this.db.select().from(this.table).where(combinedQuery) as Promise<
          InferSelectModel<T>[]
@@ -104,7 +114,7 @@ export abstract class Repository<
    // Find a single record matching the condition
    async findOne(
       where: SQL<unknown>,
-      args: CommonArgs,
+      args: UserArgs,
    ): Promise<InferSelectModel<T> | undefined> {
       const combinedQuery = this.buildQuery(args, where)
       const [result] = await this.db
@@ -115,7 +125,7 @@ export abstract class Repository<
       return result as InferSelectModel<T> | undefined
    }
    // Find all records
-   async findAll(args: CommonArgs): Promise<InferSelectModel<T>[]> {
+   async findAll(args: UserArgs): Promise<InferSelectModel<T>[]> {
       const combinedQuery = this.buildQuery(args, undefined)
       return this.db.select().from(this.table).where(combinedQuery) as Promise<
          InferSelectModel<T>[]
@@ -125,7 +135,7 @@ export abstract class Repository<
    // find multiple records matching the condition
    async findMany(
       where: SQL<unknown>,
-      args: CommonArgs,
+      args: UserArgs,
    ): Promise<InferSelectModel<T>[]> {
       const combinedQuery = this.buildQuery(args, where)
       return this.db.select().from(this.table).where(combinedQuery) as Promise<
@@ -136,7 +146,7 @@ export abstract class Repository<
    // Apply pagination and filter conditions to a query
    async findWithPagination(
       pagination: PaginationQuery,
-      args: CommonArgs,
+      args: UserArgs,
       where?: SQL<unknown>,
    ): Promise<InferSelectModel<T>[]> {
       const combinedQuery = this.buildQuery(args, where)
@@ -154,7 +164,7 @@ export abstract class Repository<
    async update(
       id: ID,
       data: PgUpdateSetSource<T>,
-      args: CommonArgs,
+      args: UserArgs,
    ): Promise<InferSelectModel<T>> {
       const combinedQuery = this.buildQuery(args, eq(this.table.id, id))
       const [result] = await this.db
@@ -169,7 +179,7 @@ export abstract class Repository<
    updateQuery(
       id: ID,
       data: PgUpdateSetSource<T>,
-      args: CommonArgs,
+      args: UserArgs,
    ): UpdateFunc<T> {
       return async (txDb: PostgresJsDatabase) => {
          const combinedQuery = this.buildQuery(args, eq(this.table.id, id))
@@ -183,7 +193,7 @@ export abstract class Repository<
    }
 
    // Delete a record by its ID
-   async deleteById(id: ID, args: CommonArgs): Promise<boolean> {
+   async deleteById(id: ID, args: UserArgs): Promise<boolean> {
       const combinedQuery = this.buildQuery(args, eq(this.table.id, id))
       const result = await this.db
          .delete(this.table)
@@ -193,7 +203,7 @@ export abstract class Repository<
    }
 
    // Count the number of records matching the query
-   async count(args: CommonArgs): Promise<number> {
+   async count(args: UserArgs): Promise<number> {
       const combinedQuery = this.buildQuery(args, undefined)
       const result = await this.db
          .select({ count: sql`COUNT(*)` })
@@ -204,7 +214,7 @@ export abstract class Repository<
 
    // Combine additional query arguments with the main condition
    buildQuery(
-      args: CommonArgs,
+      args: UserArgs,
       condition: SQL<unknown> | undefined,
    ): SQL<unknown> | undefined {
       const argsQuery = this.applyArgs(args)
@@ -216,7 +226,7 @@ export abstract class Repository<
    }
 
    // Abstract method to be implemented by derived classes for handling additional arguments
-   applyArgs(args: CommonArgs): SQLWrapper {
+   applyArgs(args: UserArgs): SQLWrapper {
       return and(
          eq(this.table.disable, false),
          eq(this.table.createdBy, args.userName),

@@ -5,6 +5,7 @@ export type DiagramState = {
    draftDiagrams: Diagram[] // used to store the current diagram being edited
    loading: boolean // used to indicate if the app is currently loading data
    error: unknown | null // used to store any error that occurs during the loading process
+   fallBackMessage: string
 }
 
 export const initDiagramState: DiagramState = {
@@ -12,4 +13,5 @@ export const initDiagramState: DiagramState = {
    draftDiagrams: [],
    loading: true,
    error: null,
+   fallBackMessage: 'Create a new Diagram to get started',
 }

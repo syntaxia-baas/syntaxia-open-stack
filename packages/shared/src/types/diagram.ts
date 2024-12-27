@@ -101,12 +101,24 @@ export type Style =
    | 'mask-border-mode'
    | 'mask-border'
 
+export type NodeCustomData = Record<string, unknown> & {
+   label: string
+}
+
+export type EdgeCustomData = Record<string, unknown> & {
+   label: string
+}
+
+export type XYPosition = {
+   x?: number
+   y?: number
+}
 export type NodeElement = {
    id: NodeId // unique id used to identify the node
-   type: string //"circle" | "rect" | "diamond" | "ellipse" | "triangle"
-   position: { x: number; y: number } // current position of the node on the canvas
-   data: { label: string } // data to be displayed on the node
-   style: { [key in Style]: string } // style of the node
+   type?: string //"circle" | "rect" | "diamond" | "ellipse" | "triangle"
+   position: XYPosition // current position of the node on the canvas
+   data: NodeCustomData // data to be displayed on the node
+   style?: { [key in Style]: string } // style of the node
 }
 
 export type DiagramId = Branded<string, 'DiagramId'>
@@ -114,9 +126,9 @@ export type EdgeElement = {
    id: EdgeId // unique id used to identify the edge
    source: string // id of the source node
    target: string // id of the target node
-   animated: boolean // whether the edge should be animated
-   data: { label: string } // data to be displayed on the node
-   style: { [key in Style]: string } // style of the edge
+   animated?: boolean // whether the edge should be animated
+   data?: EdgeCustomData // data to be displayed on the node
+   style?: { [key in Style]: string } // style of the edge
 }
 
 export type Diagram = BaseRow<DiagramId> & {
@@ -124,4 +136,19 @@ export type Diagram = BaseRow<DiagramId> & {
    edges: EdgeElement[]
    name: Name
    description: Description | null
+}
+
+export type CreateDiagramCommand = {
+   id: DiagramId
+   name: Name
+   description: Description | null
+   nodes: NodeElement[]
+   edges: EdgeElement[]
+}
+
+export type UpdateDiagramCommand = {
+   name: Name
+   description: Description | null
+   Nodes: NodeElement[]
+   Edges: EdgeElement[]
 }

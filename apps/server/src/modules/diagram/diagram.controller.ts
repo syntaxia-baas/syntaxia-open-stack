@@ -6,43 +6,56 @@ import {
    Patch,
    Param,
    Delete,
+   UseGuards,
 } from '@nestjs/common'
 import { DiagramService } from './diagram.service'
-import { CreateDiagramDto } from './dto/create-diagram.dto'
-import { UpdateDiagramDto } from './dto/update-diagram.dto'
-import { CommonArgs } from '@server/types/common-fields'
-import { DiagramId } from '@shared/types/diagram'
+import { UserArgs } from '@server/types/common-fields'
+import {
+   CreateDiagramCommand,
+   DiagramId,
+   UpdateDiagramCommand,
+} from '@shared/types/diagram'
+import { GetUserArgs } from '@server/core/rest/decorators/user-args-decorator'
+import { AuthorizeGuard } from '@server/core/rest/guards/authorize.guard'
 
 @Controller('diagram')
+@UseGuards(AuthorizeGuard)
 export class DiagramController {
    constructor(private readonly diagramService: DiagramService) {}
 
    @Post('create')
-   create(@Body() createDiagramDto: CreateDiagramDto, args: CommonArgs) {
-      return this.diagramService.create(createDiagramDto, args)
+   create(@Body() cmd: CreateDiagramCommand, @GetUserArgs() args: UserArgs) {
+      return this.diagramService.create(cmd, args)
    }
 
    @Get('getAll')
-   findAll(@Body() args: CommonArgs) {
-      return this.diagramService.findAll(args)
+   findAll(@GetUserArgs() args: UserArgs) {
+      return this.diagramService
+         .findAll(args)
+         .then(res => {
+            return res
+         })
+         .catch(err => {
+            console.log(err)
+         })
    }
 
    @Get(':id')
-   findOne(@Param('id') id: DiagramId, args: CommonArgs) {
+   findOne(@Param('id') id: DiagramId, @GetUserArgs() args: UserArgs) {
       return this.diagramService.findOne(id, args)
    }
 
    @Patch('update/:id') // Update diagram
    update(
       @Param('id') id: DiagramId,
-      @Body() updateDiagramDto: UpdateDiagramDto,
-      args: CommonArgs,
+      @Body() cmd: UpdateDiagramCommand,
+      @GetUserArgs() args: UserArgs,
    ) {
-      return this.diagramService.update(id, updateDiagramDto, args)
+      return this.diagramService.update(id, cmd, args)
    }
 
    @Delete(':id')
-   remove(@Param('id') id: DiagramId, args: CommonArgs) {
+   remove(@Param('id') id: DiagramId, @GetUserArgs() args: UserArgs) {
       return this.diagramService.remove(id, args)
    }
 }

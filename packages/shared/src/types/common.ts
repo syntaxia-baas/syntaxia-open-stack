@@ -23,13 +23,16 @@ export type Description = Branded<string, 'Description'>
 export type NodeId = Branded<string, 'NodeId'>
 export type EdgeId = Branded<string, 'EdgeId'>
 
-export interface BaseRow<ID extends Branded<unknown>> {
-   id: ID
+export interface AuditInfo {
    disable: boolean
    createdAt: Date
    createdBy: UserName | null
    updatedAt: Date
    updatedBy: UserName | null
+}
+
+export interface BaseRow<ID extends Branded<unknown>> extends AuditInfo {
+   id: ID
 }
 
 export type UserProfile = BaseRow<UserId> & {
@@ -38,3 +41,22 @@ export type UserProfile = BaseRow<UserId> & {
    email: Email
    password: string
 }
+
+export const createBasicInfo = (userName: UserName): AuditInfo => {
+   const auditInfo: AuditInfo = {
+      disable: false,
+      createdAt: new Date(),
+      createdBy: userName,
+      updatedAt: new Date(),
+      updatedBy: userName,
+   }
+   return auditInfo
+}
+export const updateAuditInfo = (
+   auditInfo: AuditInfo,
+   userName: UserName,
+): AuditInfo => ({
+   ...auditInfo,
+   updatedAt: new Date(),
+   updatedBy: userName,
+})

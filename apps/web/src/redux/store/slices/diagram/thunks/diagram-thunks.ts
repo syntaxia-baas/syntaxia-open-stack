@@ -1,32 +1,53 @@
+import axiosInstance from '@/apis/axios-instance'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import mockApi from 'src/redux/mock-api'
+import { UserName } from '@shared/types/common'
+import { CreateDiagramCommand } from '@shared/types/diagram'
 
-//on success clear pending drafts
-export const saveDiagramDrafts = createAsyncThunk(
+export type CreateDiagramPayload = {
+   userName: UserName
+   cmd: CreateDiagramCommand
+}
+
+export const saveDiagram = createAsyncThunk(
    'diagrams/save',
-   async (
-      { userId, diagram }: { userId: string; diagram: any },
-      { rejectWithValue },
-   ) => {
+   async (payload: CreateDiagramPayload, { rejectWithValue }) => {
       try {
-         const response = (await mockApi.saveDiagram(userId, diagram)) as {
-            data: any
-         }
+         const response = await axiosInstance.post(
+            '/diagram/create',
+            payload.cmd,
+            {
+               headers: {
+                  'Content-Type': 'application/json',
+                  username: payload.userName,
+               },
+            },
+         )
          return response.data
-      } catch (error: any) {
-         return rejectWithValue(error.message)
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            return rejectWithValue(error.message)
+         }
+         return rejectWithValue('An unknown error occurred')
       }
    },
 )
 
 export const fetchDiagrams = createAsyncThunk(
    'diagrams/fetch',
-   async (userId, { rejectWithValue }) => {
+   async (userName: UserName, { rejectWithValue }) => {
       try {
-         const response = (await mockApi.getDiagrams(userId)) as { data: any }
+         const response = await axiosInstance.get('/diagram/getAll', {
+            headers: {
+               'Content-Type': 'application/json',
+               username: userName,
+            },
+         })
          return response.data
-      } catch (error: any) {
-         return rejectWithValue(error.message)
+      } catch (error: unknown) {
+         if (error instanceof Error) {
+            return rejectWithValue(error.message)
+         }
+         return rejectWithValue('An unknown error occurred')
       }
    },
 )

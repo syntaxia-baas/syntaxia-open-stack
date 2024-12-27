@@ -1,77 +1,269 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { fetchDiagrams, saveDiagram } from './thunks/diagram-thunks'
 import { initDiagramState } from './state'
-import { createNewDiagram, CreateNewDiagramPayload } from './actions/add-node'
-import { act } from 'react'
+import {
+   addEdge,
+   AddEdgePayload,
+   addNode,
+   AddNodePayload,
+   createNewDiagram,
+   CreateNewDiagramPayload,
+   edgesChange,
+   LoadingMessage,
+   nodesChange,
+   OnEdgesChangePayload,
+   OnNodesChangePayload,
+   selectedDiagram,
+   SelectedDiagramPayload,
+   setError,
+   setLoading,
+} from './actions/add-node'
+import { createBasicInfo, EdgeId, NodeId } from '@shared/types/common'
+import { buildEdge, buildNode } from '@/utils/nodes-utils'
+import { Diagram } from '@shared/types/diagram'
 
 const diagramSlice = createSlice({
    name: 'diagrams',
    initialState: initDiagramState,
-   reducers: {
-      // updateNodes: (state, action) => {
-      //    state.currentDiagram.nodes = action.payload
-      // },
-      // updateEdges: (state, action) => {
-      //    state.currentDiagram.edges = action.payload
-      // },
-      // updateDiagramName: (state, action) => {
-      //    state.currentDiagram.name = action.payload
-      // },
-      // clearCurrentDiagram: state => {
-      //    state.currentDiagram = {
-      //       nodes: [],
-      //       edges: [],
-      //       name: 'Untitled Diagram',
-      //    }
-      // },
-      // loadDiagram: (state, action) => {
-      //    state.currentDiagram = action.payload
-      // },
-   },
+   reducers: {},
    extraReducers: builder => {
       builder
          .addCase(
             createNewDiagram,
             (state, action: PayloadAction<CreateNewDiagramPayload>) => {
                state.draftDiagrams.push({
-                  nodes: [],
-                  edges: [],
+                  id: action.payload.id,
                   name: action.payload.name,
                   description: action.payload.description,
+                  nodes: [],
+                  edges: [],
+                  ...createBasicInfo(action.payload.userName),
                })
             },
          )
-         .addCase(saveDiagram.pending, state => {
-            state.loading = true
+         .addCase(
+            nodesChange,
+            (state, action: PayloadAction<OnNodesChangePayload>) => {
+               const draftDiagram = state.draftDiagrams.find(
+                  diagram => diagram.id === action.payload.id,
+               )
+               if (draftDiagram) {
+                  const nodeChanges = action.payload.nodeChanges
+                  nodeChanges.forEach(change => {
+                     if (change.type === 'remove') {
+                        draftDiagram.nodes = draftDiagram.nodes.filter(
+                           node => node.id !== change.id,
+                        )
+                     } else if (change.type === 'add') {
+                        draftDiagram.nodes.push(buildNode(change.item))
+                     } else if (change.type === 'position') {
+                        draftDiagram.nodes = draftDiagram.nodes.map(node => {
+                           return node.id === change.id
+                              ? {
+                                   ...node,
+                                   id: change.id as NodeId,
+                                   position: {
+                                      x: change.position?.x,
+                                      y: change.position?.y,
+                                   },
+                                }
+                              : node
+                        })
+                     }
+                  })
+               }
+            },
+         )
+         .addCase(
+            edgesChange,
+            (state, action: PayloadAction<OnEdgesChangePayload>) => {
+               const draftDiagram = state.draftDiagrams.find(
+                  diagram => diagram.id === action.payload.id,
+               )
+               if (draftDiagram) {
+                  const edgeChanges = action.payload.edgeChanges
+                  edgeChanges.forEach(change => {
+                     if (change.type === 'remove') {
+                        draftDiagram.edges = draftDiagram.edges.filter(
+                           edge => edge.id !== change.id,
+                        )
+                     } else if (change.type === 'add') {
+                        draftDiagram.edges.push(buildEdge(change.item))
+                     }
+                  })
+               }
+            },
+         )
+         .addCase(
+            setLoading,
+            (state, action: PayloadAction<LoadingMessage>) => {
+               const { loading, message } = action.payload
+               // Update loading status and fallback message
+               state.loading = loading
+               state.fallBackMessage = message
+            },
+         )
+         // Handle setError
+         .addCase(setError, (state, action: PayloadAction<string>) => {
+            state.error = action.payload
          })
-         .addCase(saveDiagram.fulfilled, (state, action) => {
+         .addCase(
+            fetchDiagrams.fulfilled,
+            (state, action: PayloadAction<Diagram[]>) => {
+               state.diagrams = action.payload
+               state.loading = false
+            },
+         )
+         .addCase(fetchDiagrams.rejected, (state, action) => {
+            state.error = action.error.message
             state.loading = false
-            state.error = null
-         })
-         .addCase(saveDiagram.rejected, (state, action) => {
-            state.loading = false
-            state.error = action.payload as unknown
          })
          .addCase(fetchDiagrams.pending, state => {
             state.loading = true
          })
-         .addCase(fetchDiagrams.fulfilled, (state, action) => {
+         .addCase(saveDiagram.fulfilled, (state, action) => {
+            // Ensure the diagram is not already in the state
+            if (
+               !state.diagrams.some(diagram => diagram.id === action.payload.id)
+            ) {
+               state.diagrams.push(action.payload)
+            }
+            // Remove the saved diagram from the draftDiagrams array
+            state.draftDiagrams = state.draftDiagrams.filter(
+               diagram => diagram.id !== action.payload.id,
+            )
+
             state.loading = false
-            state.savedDiagrams = action.payload
             state.error = null
          })
-         .addCase(fetchDiagrams.rejected, (state, action) => {
+         .addCase(saveDiagram.rejected, (state, action) => {
+            state.error = action.error.message
             state.loading = false
-            state.error = action.payload
          })
+         .addCase(saveDiagram.pending, state => {
+            state.loading = true
+         })
+
+         .addCase(addNode, (state, action: PayloadAction<AddNodePayload>) => {
+            const draftDiagram = state.draftDiagrams.find(
+               diagram => diagram.id === action.payload.id,
+            )
+            if (draftDiagram) {
+               draftDiagram.nodes.push(action.payload.node)
+            }
+         })
+         .addCase(addEdge, (state, action: PayloadAction<AddEdgePayload>) => {
+            const draftDiagram = state.draftDiagrams.find(
+               diagram => diagram.id === action.payload.id,
+            )
+            if (draftDiagram) {
+               draftDiagram.edges.push({
+                  id: 'edge-id' as EdgeId,
+                  source: action.payload.source,
+                  target: action.payload.target,
+               })
+            }
+         })
+         .addCase(
+            selectedDiagram,
+            (state, action: PayloadAction<SelectedDiagramPayload>) => {
+               const selected = state.diagrams.find(
+                  diagram => diagram.id === action.payload.id,
+               )
+               if (!selected) {
+                  throw new Error('Selected diagram not found')
+               }
+               //if exisists replace newly selected diagram
+               const existingDraftsWithSelected = state.draftDiagrams.filter(
+                  diagram => diagram.id !== action.payload.id,
+               )
+               const allDrafts = [...existingDraftsWithSelected, selected]
+               state.draftDiagrams = allDrafts
+            },
+         )
+
+      // .addCase(
+      //    updateNodes,
+      //    (state, action: PayloadAction<UpdateNodesPayload>) => {
+      //       const draftDiagram = state.draftDiagrams.find(
+      //          diagram => diagram.id === action.payload.id,
+      //       )
+      //       // if (draftDiagram) {
+      //       //    const nodeIndex = draftDiagram.nodes.findIndex(
+      //       //       node => node.id === action.payload.nodes.id,
+      //       //    )
+      //       //    if (nodeIndex !== -1) {
+      //       //       draftDiagram.nodes[nodeIndex] = action.payload.nodes
+      //       //    }
+      //       // }
+      //       if (draftDiagram) {
+      //          draftDiagram.nodes = action.payload.nodes
+      //       }
+      //    },
+      // )
+      // .addCase(
+      //    deleteNode,
+      //    (state, action: PayloadAction<DeleteNodePayload>) => {
+      //       const draftDiagram = state.draftDiagrams.find(
+      //          diagram => diagram.id === action.payload.id,
+      //       )
+      //       if (draftDiagram) {
+      //          draftDiagram.nodes = draftDiagram.nodes.filter(
+      //             node => node.id !== action.payload.nodeId,
+      //          )
+      //       }
+      //    },
+      // )
+      // .addCase(addEdge, (state, action: PayloadAction<AddEdgePayload>) => {
+      //    const draftDiagram = state.draftDiagrams.find(
+      //       diagram => diagram.id === action.payload.id,
+      //    )
+      //    if (draftDiagram) {
+      //       draftDiagram.edges.push({
+      //          id: 'edge-id' as EdgeId,
+      //          source: action.payload.source,
+      //          target: action.payload.target,
+      //          animated: false,
+      //       })
+      //    }
+      // })
+      // .addCase(
+      //    updateEdges,
+      //    (state, action: PayloadAction<UpdateEdgesPayload>) => {
+      //       const draftDiagram = state.draftDiagrams.find(
+      //          diagram => diagram.id === action.payload.id,
+      //       )
+      //       // if (draftDiagram) {
+      //       //    const edgeIndex = draftDiagram.edges.findIndex(
+      //       //       edge =>
+      //       //          edge.source === action.payload.source &&
+      //       //          edge.target === action.payload.target,
+      //       //    )
+      //       //    if (edgeIndex !== -1) {
+      //       //       if (draftDiagram.edges[edgeIndex]) {
+      //       //          draftDiagram.edges[edgeIndex].animated = true
+      //       //       }
+      //       //    }
+      //       // }
+      //       if (draftDiagram) {
+      //          draftDiagram.edges = action.payload.edges
+      //       }
+      //    },
+      // )
+      // .addCase(
+      //    deleteEdge,
+      //    (state, action: PayloadAction<DeleteEdgePayload>) => {
+      //       const draftDiagram = state.draftDiagrams.find(
+      //          diagram => diagram.id === action.payload.id,
+      //       )
+      //       if (draftDiagram) {
+      //          draftDiagram.edges = draftDiagram.edges.filter(
+      //             edge => edge.id !== action.payload.edgeId,
+      //          )
+      //       }
+      //    },
+      // )
    },
 })
-export const {
-   updateNodes,
-   updateEdges,
-   updateDiagramName,
-   clearCurrentDiagram,
-   loadDiagram,
-} = diagramSlice.actions
 
 export default diagramSlice.reducer

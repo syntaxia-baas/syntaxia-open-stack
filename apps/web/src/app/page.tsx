@@ -1,7 +1,8 @@
+'use client'
+
+import { WorkSpaceBuilder } from '@/components/WorkSpaceBuilder'
 import React from 'react'
 
-import { WorkSpaceBuilder } from 'src/components/WorkSpaceBuilder'
-import { LoginPage } from './login/page'
 export default function Home() {
    return (
       <>

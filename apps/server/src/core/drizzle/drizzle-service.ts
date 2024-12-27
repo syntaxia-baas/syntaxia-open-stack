@@ -12,8 +12,8 @@ import {
 import { fromPromiseToEffect } from '../effect/effect-util'
 import { SyntaxiaError } from '../errors/errors'
 import { FuncAction } from '../repo/Repository'
-//import dotenv from 'dotenv'
-//dotenv.config()
+import dotenv from 'dotenv'
+dotenv.config()
 @Injectable()
 export class DrizzleService implements OnModuleDestroy, OnApplicationShutdown {
    private pool: Sql // Connection pool

@@ -1,34 +1,73 @@
 import {
    addEdge,
+   applyEdgeChanges,
+   applyNodeChanges,
    Background,
-   Connection,
    Controls,
    Edge,
    MiniMap,
    Node,
    OnConnect,
+   OnEdgesChange,
+   OnNodesChange,
    Panel,
    ReactFlow,
    ReactFlowInstance,
    ReactFlowProvider,
-   useEdgesState,
-   useNodesState,
 } from '@xyflow/react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { nodeTypes } from './nodes/node-types'
 import { RightSideBar } from './RightSideBar'
-export const CanvasArea = () => {
-   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([])
-   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([])
-   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
-   const [reactFlowInstance, setReactFlowInstance] =
-      useState<ReactFlowInstance | null>(null)
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/redux/store'
+import { useDiagram } from '@/providers/DiagramProvider'
+import { NodeId } from '@shared/types/common'
+import { buildEdges, buildNodes } from '@/utils/nodes-utils'
+import {
+   addNode,
+   edgesChange,
+   nodesChange,
+} from '@/redux/store/slices/diagram/actions/add-node'
+import {
+   EdgeCustomData,
+   NodeCustomData,
+   NodeElement,
+} from '@shared/types/diagram'
 
-   // Handle new connections between nodes
-   const onConnect: OnConnect = useCallback(
-      (connection: Connection) => {
-         setEdges(eds => addEdge({ ...connection, animated: true }, eds))
+export const CanvasArea = () => {
+   const dispatch = useDispatch<AppDispatch>()
+   const diagramState = useSelector((state: RootState) => state.diagrams)
+   const { currentDiagram } = useDiagram()
+   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
+   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance<
+      Node<NodeCustomData>,
+      Edge<EdgeCustomData>
+   > | null>(null)
+   const [nodes, setNodes] = useState<Node<NodeCustomData>[]>([])
+   const [edges, setEdges] = useState<Edge<EdgeCustomData>[]>([])
+
+   useEffect(() => {
+      setNodes(buildNodes(currentDiagram.nodes) || [])
+      setEdges(buildEdges(currentDiagram.edges) || [])
+   }, [currentDiagram])
+
+   const onNodesChange: OnNodesChange<Node<NodeCustomData>> = useCallback(
+      changes => {
+         setNodes(nds => applyNodeChanges(changes, nds))
+         dispatch(nodesChange({ id: currentDiagram.id, nodeChanges: changes }))
       },
+      [dispatch, currentDiagram.id],
+   )
+   const onEdgesChange: OnEdgesChange<Edge<EdgeCustomData>> = useCallback(
+      changes => {
+         setEdges(eds => applyEdgeChanges(changes, eds))
+         dispatch(edgesChange({ id: currentDiagram.id, edgeChanges: changes }))
+      },
+
+      [dispatch, currentDiagram.id],
+   )
+   const onConnect: OnConnect = useCallback(
+      connection => setEdges(eds => addEdge(connection, eds)),
       [setEdges],
    )
 
@@ -53,37 +92,40 @@ export const CanvasArea = () => {
          const type = event.dataTransfer.getData('application/reactflow')
          const label = event.dataTransfer.getData('nodeName')
 
-         const newNode = {
+         const newNode: Node<NodeCustomData> = {
             id: `${type}-${nodes.length + 1}`,
             type,
             position,
             data: { label: `${label} ${nodes.length + 1}` },
          }
 
-         // const { type, color } = JSON.parse(event.dataTransfer.getData('application/reactflow'));
+         const newNodeElement: NodeElement = {
+            id: newNode.id as NodeId,
+            type: newNode.type,
+            position: newNode.position,
+            data: newNode.data,
+         }
 
-         // const newNode = {
-         //   id: `${type}-${nodes.length + 1}`,
-         //   type,
-         //   position,
-         //   data: { label: `${type.charAt(0).toUpperCase() + type.slice(1)} ${nodes.length + 1}`, color },
-         // };
-
-         setNodes(nds => nds.concat(newNode))
+         setNodes(nds => {
+            const updateNodes = nds.concat(newNode)
+            return updateNodes
+         })
+         dispatch(addNode({ id: currentDiagram.id, node: newNodeElement }))
       },
-      [reactFlowInstance, nodes, setNodes],
+      [reactFlowInstance, nodes.length, dispatch, currentDiagram.id],
    )
 
    // Handle node selection
    const onNodeClick = useCallback((_: unknown, node: Node) => {
       setSelectedNode(node)
    }, [])
+
    return (
       <div className="relative flex-1">
          <div className="absolute inset-0 m-2 overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-white">
             <ReactFlowProvider>
                <div className="size-full">
-                  <ReactFlow
+                  <ReactFlow<Node<NodeCustomData>, Edge<EdgeCustomData>>
                      nodes={nodes}
                      edges={edges}
                      onInit={setReactFlowInstance}
@@ -99,6 +141,14 @@ export const CanvasArea = () => {
                      <Background />
                      <Controls />
                      <MiniMap />
+                     <div className="absolute inset-0 flex flex-col items-center justify-center text-2xl text-gray-400">
+                        {diagramState.loading && (
+                           <>
+                              <h1> {currentDiagram?.name} </h1>
+                              <h1>{diagramState.fallBackMessage}</h1>
+                           </>
+                        )}
+                     </div>
 
                      <Panel position="top-right">
                         <div className="text-sm text-gray-600">
