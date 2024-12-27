@@ -79,10 +79,13 @@ git clone https://github.com/[username]/[repo-name].git
 cd [repo-name]
 
 # Install dependencies
-yarn install
+npm install
 
-# Run the development server
-yarn dev
+# Run below command at root, it builds entire mono repo (shared packages, FE & BE)
+turbo run build
+
+# Run below command at root, it runs the both frontend and backend apps together
+npm run dev
 ```
 
 ---
