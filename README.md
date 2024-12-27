@@ -73,7 +73,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/[username]/[repo-name].git
+git clone https://github.com/syntaxia-baas/syntaxia-open-stack.git
 
 # Navigate to the project directory
 cd [repo-name]
