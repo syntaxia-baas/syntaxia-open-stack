@@ -82,6 +82,7 @@ cd [repo-name]
 npm install
 
 # Run below command at root, it builds entire mono repo (shared packages, FE & BE)
+# building the entire mono repo is required in order to run
 turbo run build
 
 # Run below command at root, it runs the both frontend and backend apps together

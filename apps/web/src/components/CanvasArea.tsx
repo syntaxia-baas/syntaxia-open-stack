@@ -20,7 +20,6 @@ import { nodeTypes } from './nodes/node-types'
 import { RightSideBar } from './RightSideBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/redux/store'
-import { useDiagram } from '@/providers/DiagramProvider'
 import { NodeId } from '@shared/types/common'
 import { buildEdges, buildNodes } from '@/utils/nodes-utils'
 import {
@@ -33,6 +32,7 @@ import {
    NodeCustomData,
    NodeElement,
 } from '@shared/types/diagram'
+import { useDiagram } from '@/providers/DiagramProvider'
 
 export const CanvasArea = () => {
    const dispatch = useDispatch<AppDispatch>()

@@ -5,7 +5,6 @@ import '@xyflow/react/dist/style.css'
 import { Provider } from 'react-redux'
 import store from '../redux/store'
 import { AuthProvider } from '@/providers/AuthProvider'
-import { DiagramProvider } from '@/providers/DiagramProvider'
 
 const geistSans = localFont({
    src: './fonts/GeistVF.woff',
