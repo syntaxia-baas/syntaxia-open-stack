@@ -76,7 +76,10 @@
 git clone https://github.com/syntaxia-baas/syntaxia-open-stack.git
 
 # Navigate to the project directory
-cd [syntaxia-open-stack]
+cd syntaxia-open-stack
+
+# Install turbo globally
+npm install turbo --global
 
 # Install dependencies
 npm install
