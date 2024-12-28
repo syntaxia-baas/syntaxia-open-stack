@@ -34,7 +34,7 @@
 
 ### 🔐 **Authentication**
 
-- 🔑 **NextAuth.js**: Secure and extensible authentication.(Pending)
+- 🔑 **NextAuth.js**: Secure and extensible authentication.(Coming soon!)
 
 ### 🛢️ **Database**
 
@@ -43,13 +43,13 @@
 
 ### 🧪 **Testing**
 
-- 🧪 **Jest**: Robust testing framework.(Pending)
+- 🧪 **Jest**: Robust testing framework.(Coming soon!)
 - 🧩 **React Testing Library**: Unit testing for React components.
 - 🕵️‍♂️ **Supertest**: API testing made easy.
 
 ### 📈 **DevOps & CI/CD**
 
-- 🤖 **GitHub Actions**: Automated testing and deployment. (Pending)
+- 🤖 **GitHub Actions**: Automated testing and deployment. (Coming soon!)
 - 🚀 **Vercel**: Seamless frontend deployment.(Pending)
 - 📡 **Render.com**: Backend hosting for scalability.(Pending)
 
@@ -57,8 +57,8 @@
 
 - 💅 **ESLint**: Linting for clean and consistent code.
 - ✨ **Prettier**: Automatic code formatting.
-- 🐾 **Husky**: Git hooks for streamlined workflows.(Pending)
-- 🚦 **Commitlint**: Enforce conventional commits.(Pending)
+- 🐾 **Husky**: Git hooks for streamlined workflows.(Coming soon!)
+- 🚦 **Commitlint**: Enforce conventional commits.(Coming soon!)
 
 ---
 
