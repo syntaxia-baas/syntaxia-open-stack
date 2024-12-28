@@ -50,8 +50,8 @@
 ### 📈 **DevOps & CI/CD**
 
 - 🤖 **GitHub Actions**: Automated testing and deployment. (Pending)
-- 🚀 **Vercel**: Seamless frontend deployment.
-- 📡 **Render.com**: Backend hosting for scalability.
+- 🚀 **Vercel**: Seamless frontend deployment.(Pending)
+- 📡 **Render.com**: Backend hosting for scalability.(Pending)
 
 ### 🛠️ **Developer Experience**
 
@@ -76,7 +76,7 @@
 git clone https://github.com/syntaxia-baas/syntaxia-open-stack.git
 
 # Navigate to the project directory
-cd [repo-name]
+cd [syntaxia-open-stack]
 
 # Install dependencies
 npm install
@@ -105,9 +105,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 🤝 **Connect With Us**
 
-- 🌐 [Website](https://yourappwebsite.com)
-- 🐦 [Twitter](https://twitter.com/yourapp)
-- 📧 [Email Us](mailto:contact@yourapp.com)
+- 🌐 [Website](https://syntaxia.io)
+- 🐦 [Twitter](https://x.com/SyntaxiaBaaS)
+- 📧 [Email Us](mailto:murali@syntaxia.io)
 
 ---
 
