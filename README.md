@@ -92,13 +92,15 @@ yarn install
 # Database Setup
 # Install PostgreSQL and ensure it is running.
 
-# Create a `.env` file in the root directory at server (../apps/server/) and add your PostgreSQL database URL.
+# Create a `.env` file in the root directory at server (../apps/server/) and 
+# add your PostgreSQL database URL.
 # Example:
 DATABASE_URL=postgres://your_username:your_password@localhost:5432/your_database_name
 
 # This project uses Drizzle ORM for database operations.
 # Learn more about Drizzle ORM: https://orm.drizzle.team/docs/overview
-# You can refer to the documentation and switch to a database of your choice (if supported by Drizzle).
+# You can refer to the documentation and switch to 
+# a database of your choice (if supported by Drizzle).
 
 # Generate Drizzle migrations and schema
 yarn db:generate
@@ -107,7 +109,8 @@ yarn db:generate
 yarn db:push
 
 #### WEB APP ####
-# Create a .env.development file in the root at web app (../apps/web/) and server url. It should be something like below
+# Create a .env.development file in the root at web app (../apps/web/) and server url 
+# as env variable. It should be something like below
 NEXT_PUBLIC_AWS_API_GATEWAY_URL=http://localhost:8080
 
 # Build the entire monorepo (shared packages, frontend, and backend).
