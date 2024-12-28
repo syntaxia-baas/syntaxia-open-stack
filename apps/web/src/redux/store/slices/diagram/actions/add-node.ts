@@ -87,15 +87,14 @@ export const addNode = createAction(
 //    }),
 // )
 
-export type AddEdgePayload = {
+export type UpdateEdgePayload = {
    id: DiagramId
-   source: string
-   target: string
+   edge: Edge<EdgeCustomData>
 }
 
-export const addEdge = createAction(
-   'diagrams/addEdge',
-   (payload: AddEdgePayload) => ({
+export const updateEdge = createAction(
+   'diagrams/updateEdge',
+   (payload: UpdateEdgePayload) => ({
       payload,
    }),
 )

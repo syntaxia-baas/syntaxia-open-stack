@@ -14,7 +14,6 @@ import { AuthModule } from './modules/auth/auth.module'
       AuthModule,
       ConfigModule.forRoot({
          isGlobal: true,
-         envFilePath: `.env.${process.env.NODE_ENV}`,
       }),
    ],
    controllers: [AppController],

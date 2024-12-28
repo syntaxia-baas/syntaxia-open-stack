@@ -120,12 +120,26 @@ export type NodeElement = {
    data: NodeCustomData // data to be displayed on the node
    style?: { [key in Style]: string } // style of the node
 }
-
+export type EdgeMarker = {
+   type: MarkerType
+   color?: string
+   width?: number
+   height?: number
+   markerUnits?: string
+   orient?: string
+   strokeWidth?: number
+}
+export type EdgeMarkerType = string
+export declare enum MarkerType {
+   Arrow = 'arrow',
+   ArrowClosed = 'arrowclosed',
+}
 export type DiagramId = Branded<string, 'DiagramId'>
 export type EdgeElement = {
    id: EdgeId // unique id used to identify the edge
    source: string // id of the source node
    target: string // id of the target node
+   type: MarkerType // type of the edge
    animated?: boolean // whether the edge should be animated
    data?: EdgeCustomData // data to be displayed on the node
    style?: { [key in Style]: string } // style of the edge

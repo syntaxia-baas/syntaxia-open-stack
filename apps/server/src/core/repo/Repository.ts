@@ -91,12 +91,20 @@ export abstract class Repository<
    }
 
    // Find a record by its ID
-   async findById(id: ID, args: UserArgs): Promise<InferSelectModel<T>> {
+   async findById(
+      id: ID,
+      args: UserArgs,
+   ): Promise<InferSelectModel<T> | undefined> {
       const combinedQuery = this.buildQuery(args, eq(this.table.id, id))
       const [result] = await this.db
          .select()
          .from(this.table)
          .where(combinedQuery)
+      return result as InferSelectModel<T>
+   }
+
+   async getById(id: ID, args: UserArgs): Promise<InferSelectModel<T>> {
+      const result = this.findById(id, args)
       if (!result) {
          throw Errors.RowNotFoundError(`Record with id ${id} not found`)
       }

@@ -2,8 +2,9 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { AuthorizeGuard } from './core/rest/guards/authorize.guard'
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8081
 async function bootstrap() {
+   console.log('DATABASE_URL:', process.env.DATABASE_URL) // Debug the connection URL
    const app = await NestFactory.create(AppModule)
    const authGuard = app.get(AuthorizeGuard)
 

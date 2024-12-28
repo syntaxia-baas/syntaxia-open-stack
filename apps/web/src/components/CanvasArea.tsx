@@ -5,6 +5,7 @@ import {
    Background,
    Controls,
    Edge,
+   MarkerType,
    MiniMap,
    Node,
    OnConnect,
@@ -20,12 +21,13 @@ import { nodeTypes } from './nodes/node-types'
 import { RightSideBar } from './RightSideBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/redux/store'
-import { NodeId } from '@shared/types/common'
+import { EdgeId, NodeId } from '@shared/types/common'
 import { buildEdges, buildNodes } from '@/utils/nodes-utils'
 import {
    addNode,
    edgesChange,
    nodesChange,
+   updateEdge,
 } from '@/redux/store/slices/diagram/actions/add-node'
 import {
    EdgeCustomData,
@@ -38,14 +40,16 @@ export const CanvasArea = () => {
    const dispatch = useDispatch<AppDispatch>()
    const diagramState = useSelector((state: RootState) => state.diagrams)
    const { currentDiagram } = useDiagram()
-   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
+   const [selectedNode, setSelectedNode] =
+      useState<Node<NodeCustomData> | null>(null)
    const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance<
       Node<NodeCustomData>,
       Edge<EdgeCustomData>
    > | null>(null)
    const [nodes, setNodes] = useState<Node<NodeCustomData>[]>([])
    const [edges, setEdges] = useState<Edge<EdgeCustomData>[]>([])
-
+   const [selectedEdge, setSelectedEdge] =
+      useState<Edge<EdgeCustomData> | null>(null)
    useEffect(() => {
       setNodes(buildNodes(currentDiagram.nodes) || [])
       setEdges(buildEdges(currentDiagram.edges) || [])
@@ -67,10 +71,30 @@ export const CanvasArea = () => {
       [dispatch, currentDiagram.id],
    )
    const onConnect: OnConnect = useCallback(
-      connection => setEdges(eds => addEdge(connection, eds)),
-      [setEdges],
-   )
+      connection => {
+         // Update local React Flow state
+         setEdges(eds => addEdge(connection, eds))
 
+         // Create the edge object that matches EdgeElement type
+         const newEdge: Edge<EdgeCustomData> = {
+            id: `edge-${connection.source}-${connection.target}`,
+            source: connection.source,
+            target: connection.target,
+            type: 'default', // or whatever default type you want
+            animated: true, // optional
+            // Add any additional edge properties you need
+         }
+
+         // Dispatch using your action creator
+         dispatch(
+            updateEdge({
+               id: currentDiagram.id,
+               edge: newEdge,
+            }),
+         )
+      },
+      [setEdges, dispatch, currentDiagram.id],
+   )
    // Handle dropping new nodes onto the canvas
    const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault()
@@ -116,7 +140,7 @@ export const CanvasArea = () => {
    )
 
    // Handle node selection
-   const onNodeClick = useCallback((_: unknown, node: Node) => {
+   const onNodeClick = useCallback((_: unknown, node: Node<NodeCustomData>) => {
       setSelectedNode(node)
    }, [])
 
@@ -137,6 +161,15 @@ export const CanvasArea = () => {
                      onNodeClick={onNodeClick}
                      nodeTypes={nodeTypes}
                      fitView
+                     defaultEdgeOptions={{
+                        type: 'smoothstep', // or 'default', 'straight', 'step', 'bezier'
+                        markerEnd: {
+                           type: 'arrowclosed' as MarkerType,
+                           width: 15,
+                           height: 15,
+                           color: '#778899',
+                        },
+                     }}
                   >
                      <Background />
                      <Controls />

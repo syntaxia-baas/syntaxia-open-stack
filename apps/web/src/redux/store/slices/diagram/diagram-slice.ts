@@ -2,8 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { fetchDiagrams, saveDiagram } from './thunks/diagram-thunks'
 import { initDiagramState } from './state'
 import {
-   addEdge,
-   AddEdgePayload,
    addNode,
    AddNodePayload,
    createNewDiagram,
@@ -17,10 +15,12 @@ import {
    SelectedDiagramPayload,
    setError,
    setLoading,
+   updateEdge,
+   UpdateEdgePayload,
 } from './actions/add-node'
 import { createBasicInfo, EdgeId, NodeId } from '@shared/types/common'
 import { buildEdge, buildNode } from '@/utils/nodes-utils'
-import { Diagram } from '@shared/types/diagram'
+import { Diagram, EdgeElement, MarkerType } from '@shared/types/diagram'
 
 const diagramSlice = createSlice({
    name: 'diagrams',
@@ -152,18 +152,25 @@ const diagramSlice = createSlice({
                draftDiagram.nodes.push(action.payload.node)
             }
          })
-         .addCase(addEdge, (state, action: PayloadAction<AddEdgePayload>) => {
-            const draftDiagram = state.draftDiagrams.find(
-               diagram => diagram.id === action.payload.id,
-            )
-            if (draftDiagram) {
-               draftDiagram.edges.push({
-                  id: 'edge-id' as EdgeId,
-                  source: action.payload.source,
-                  target: action.payload.target,
-               })
-            }
-         })
+         .addCase(
+            updateEdge,
+            (state, action: PayloadAction<UpdateEdgePayload>) => {
+               const draftDiagram = state.draftDiagrams.find(
+                  diagram => diagram.id === action.payload.id,
+               )
+               if (draftDiagram) {
+                  const newEdge: EdgeElement = {
+                     id: `edge-${action.payload.edge.source}-${action.payload.edge.target}` as EdgeId,
+                     source: action.payload.edge.source,
+                     target: action.payload.edge.target,
+                     type: (action.payload.edge.type as MarkerType) || 'arrow',
+                     animated: action.payload.edge.animated,
+                     data: action.payload.edge.data,
+                  }
+                  draftDiagram.edges.push(newEdge)
+               }
+            },
+         )
          .addCase(
             selectedDiagram,
             (state, action: PayloadAction<SelectedDiagramPayload>) => {
