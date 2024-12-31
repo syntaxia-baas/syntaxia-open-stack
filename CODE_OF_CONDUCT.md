@@ -1,5 +1,3 @@
 ---
-
-**Code of Conduct**: Be kind 😊.  
-
+"Code of Conduct": "Be kind 😊"
 ---
