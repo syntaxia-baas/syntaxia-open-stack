@@ -17,13 +17,10 @@ Thank you for considering contributing to this project! We welcome contributions
 
 ### 2. Install Dependencies
 
-- Install [pnpm](https://pnpm.io/) (recommended for managing dependencies):
-   ```bash
-   npm install -g pnpm
    ```
 - Install all dependencies:
    ```bash
-   pnpm install
+   yarn  install
    ```
 
 ### 3. Start the Development Environment
@@ -31,7 +28,7 @@ Thank you for considering contributing to this project! We welcome contributions
 - Run both the backend and frontend:
 
    ```bash
-   pnpm run dev
+   yarn run dev
    ```
 
 - The frontend will be available at `http://localhost:3000`.
@@ -60,8 +57,8 @@ Thank you for considering contributing to this project! We welcome contributions
    - Use **TypeScript** for type safety.
    - Use **ESLint** and **Prettier** for consistent formatting:
       ```bash
-      pnpm lint
-      pnpm format
+      yarn lint
+      yarn format
       ```
    - Ensure tests are written for new features or bug fixes.
 
@@ -69,7 +66,7 @@ Thank you for considering contributing to this project! We welcome contributions
 
 - Use **Jest** to ensure your changes don’t break anything:
    ```bash
-   pnpm test
+   yarn test
    ```
 
 ### 5. Commit Your Changes
