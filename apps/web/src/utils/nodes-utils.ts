@@ -5,7 +5,7 @@ import {
    NodeCustomData,
    EdgeCustomData,
 } from '@shared/types/diagram'
-import { Edge, Node } from '@xyflow/react'
+import { Edge, Node, MarkerType } from '@xyflow/react'
 
 export const buildNodes = (
    nodes: NodeElement[],
@@ -58,6 +58,7 @@ export const buildEdgeElements = (
          id: edge.id as EdgeId,
          source: edge.source,
          target: edge.target,
+         type: edge.type as MarkerType,
          animated: edge.animated,
       }
    })
@@ -77,5 +78,6 @@ export const buildEdge = (edge: Edge<EdgeCustomData>): EdgeElement => {
       source: edge.source,
       target: edge.target,
       animated: edge.animated,
+      type: edge.type as MarkerType,
    }
 }

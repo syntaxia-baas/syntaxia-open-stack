@@ -129,7 +129,7 @@ export type EdgeMarker = {
    orient?: string
    strokeWidth?: number
 }
-export type EdgeMarkerType = string
+export type EdgeMarkerType = string | EdgeMarker
 export declare enum MarkerType {
    Arrow = 'arrow',
    ArrowClosed = 'arrowclosed',

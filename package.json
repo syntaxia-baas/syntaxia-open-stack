@@ -6,7 +6,8 @@
       "dev": "turbo run dev",
       "lint": "turbo run lint",
       "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-      "test": "turbo run test"
+      "test": "turbo run test",
+      "clean": "turbo run clean"
    },
    "devDependencies": {
       "@commitlint/config-conventional": "^17.1.2",

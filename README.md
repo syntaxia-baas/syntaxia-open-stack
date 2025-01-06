@@ -87,7 +87,7 @@ yarn global add nodemon
 # Install project dependencies
 yarn install
 
-##### SERVER ####
+##### SERVER #### ()
 
 # Database Setup
 # Install PostgreSQL and ensure it is running.
