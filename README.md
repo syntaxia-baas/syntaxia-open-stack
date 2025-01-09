@@ -75,10 +75,10 @@
 # Clone the repository
 git clone https://github.com/syntaxia-baas/syntaxia-open-stack.git
 
-# Navigate to the project directory
+## Navigate to the project root directory
 cd syntaxia-open-stack
 
-# Install Turbo globally
+# Install Turbo globally (if you dont have turbo mono not installed)
 yarn global add turbo
 
 # Install Nodemon globally
@@ -87,7 +87,9 @@ yarn global add nodemon
 # Install project dependencies
 yarn install
 
-##### SERVER #### ()
+##### SERVER ####
+## Navigate to the server directory
+cd apps/server
 
 # Database Setup
 # Install PostgreSQL and ensure it is running.
@@ -109,9 +111,15 @@ yarn db:generate
 yarn db:push
 
 #### WEB APP ####
+## Navigate to the web app directory
+cd apps/web
+
 # Create a .env.development file in the root at web app (../apps/web/) and server url 
 # as env variable. It should be something like below
 NEXT_PUBLIC_AWS_API_GATEWAY_URL=http://localhost:8080
+
+## Navigate back to the project root directory and run below commands
+cd syntaxia-open-stack
 
 # Build the entire monorepo (shared packages, frontend, and backend).
 # This step is necessary before running the application.
@@ -120,7 +128,7 @@ turbo run build
 # Run the development servers for both frontend and backend.
 # Backend will run at: http://localhost:8080/
 # Frontend will run at: http://localhost:3000/
-yarn run dev
+yarn dev [or] turbo run dev
 
 ```
 
