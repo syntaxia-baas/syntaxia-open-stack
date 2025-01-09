@@ -6,9 +6,10 @@
 
 ## 🌟 **Features**
 
-- 🔒 **Authentication**: Secure login system with NextAuth(Coming soon!).
-- 🖼️ **Architecture Diagram Builders**:
-   - React Flow-based diagram builder for flow-based diagrams.
+- **Interactive Diagram Builder**: Create flow-based diagrams using React Flow.  
+- **State Management**: Fully managed state with Redux for predictable application behavior.  
+- **Monorepo Architecture**: Unified monorepo hosting frontend, backend, and shared libraries for seamless integration.  
+- **Type-Safe Data Access**: Leverage Drizzle ORM for robust and type-safe database interactions.  
 
 ---
 
@@ -32,33 +33,35 @@
 
 - 🛠️ **Turborepo**: High-performance monorepo setup.
 
-### 🔐 **Authentication**
-
-- 🔑 **NextAuth.js**: Secure and extensible authentication.(Coming soon!)
-
 ### 🛢️ **Database**
 
 - 🐘 **PostgreSQL**: Reliable and scalable relational database.
 - 🗃️ **Drizzle ORM**: Simplified and type-safe database layer.
 
-### 🧪 **Testing**
-
-- 🧪 **Jest**: Robust testing framework.(Coming soon!)
-- 🧩 **React Testing Library**: Unit testing for React components.
-- 🕵️‍♂️ **Supertest**: API testing made easy.
-
-### 📈 **DevOps & CI/CD**
-
-- 🤖 **GitHub Actions**: Automated testing and deployment. (Coming soon!)
-- 🚀 **Vercel**: Seamless frontend deployment.(Pending)
-- 📡 **Render.com**: Backend hosting for scalability.(Pending)
-
 ### 🛠️ **Developer Experience**
 
 - 💅 **ESLint**: Linting for clean and consistent code.
 - ✨ **Prettier**: Automatic code formatting.
-- 🐾 **Husky**: Git hooks for streamlined workflows.(Coming soon!)
-- 🚦 **Commitlint**: Enforce conventional commits.(Coming soon!)
+---
+### TODO List
+
+#### Authentication
+- [ ] Implement **NextAuth.js** integration for secure login.
+
+#### Testing
+- [ ] Set up **Jest** for backend testing.
+- [ ] Configure **React Testing Library** for unit testing of React components.
+- [ ] Add **Supertest** for API testing.
+
+#### DevOps & CI/CD
+- [ ] Configure **GitHub Actions** for automated testing and deployment.
+- [ ] Deploy frontend using **Vercel** (Pending).
+
+#### Developer Experience
+- [ ] 🐾Integrate **Husky** for Git hooks.
+- [ ] 🚦Set up **Commitlint** to enforce conventional commits. 
+
+Feel free to create pull request with your wishlist
 
 ---
 
